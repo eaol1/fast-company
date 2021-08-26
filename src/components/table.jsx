@@ -14,27 +14,25 @@ export default function DataTables({users, handleDelete}) {
         </tr>
       </thead>
       <tbody>
-      {users.map(user => {
-        return (
-          <tr key={user._id}>
-            <td>{user.name}</td>
-            <td>
-            {user.qualities.map(quality => 
-              <span 
-                key={quality._id}
-                className={`badge bg-${quality.color} me-2`}
-              >
-                {quality.name}
-              </span>
-            )}
-            </td>
-            <td>{user.profession.name}</td>
-            <td>{user.completedMeetings}</td>
-            <td>{user.rate}</td>
-            <td><button className="btn btn-danger" onClick={() => handleDelete(user._id)}>Delete</button></td>
-          </tr>
-        )
-      })}
+      {users.map(user =>
+        <tr key={user._id}>
+          <td>{user.name}</td>
+          <td>
+          {user.qualities.map(quality => 
+            <span 
+              key={quality._id}
+              className={`badge bg-${quality.color} me-2`}
+            >
+              {quality.name}
+            </span>
+          )}
+          </td>
+          <td>{user.profession.name}</td>
+          <td>{user.completedMeetings}</td>
+          <td>{user.rate}</td>
+          <td><button className="btn btn-danger" onClick={() => handleDelete(user._id)}>Delete</button></td>
+        </tr>
+        )}
       </tbody>
     </table>
   )
