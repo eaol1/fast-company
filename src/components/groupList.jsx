@@ -1,24 +1,29 @@
 import React from "react"
+
 import PropTypes from "prop-types"
 
-const GroupList = ({ items, selectedItem, valueProperty, contentProperty, onProfessionSelect }) => {
-  const professions = Object.values(items)
-  const count = professions.length
+const GroupList = ({
+  items,
+  selectedItem,
+  valueProperty,
+  contentProperty,
+  onProfessionSelect
+}) => {
+  const count = items.length
 
   return (
     <ul className="list-group">
       {count > 0 &&
-        professions.map(item =>
+        items.map(item => (
           <li
             key={item[valueProperty]}
-            className={`list-group-item${(item === selectedItem ? " active" : "")}`}
+            className={`list-group-item${item === selectedItem ? " active" : ""}`}
             onClick={() => onProfessionSelect(item)}
             role="button"
           >
             {item[contentProperty]}
           </li>
-        )
-      }
+        ))}
     </ul>
   )
 }
@@ -29,7 +34,7 @@ GroupList.defaultProps = {
 }
 
 GroupList.propTypes = {
-  items: PropTypes.object.isRequired,
+  items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   valueProperty: PropTypes.string.isRequired,
   contentProperty: PropTypes.string.isRequired,
   onProfessionSelect: PropTypes.func.isRequired,

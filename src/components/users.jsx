@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react"
+import React, {
+  useEffect,
+  useState
+} from "react"
+
 import PropTypes from "prop-types"
-import { paginate } from "../utils/paginate"
+
 import api from "../api"
-import SearchStatus from "./searchStatus"
-import Pagination from "./pagination"
-import User from "./user"
+import { paginate } from "../utils/paginate"
 import GroupList from "./groupList"
+import Pagination from "./pagination"
+import SearchStatus from "./searchStatus"
+import User from "./user"
 
 const Users = ({ users: allUsers, ...rest }) => {
   const pageSize = 4
@@ -14,10 +19,7 @@ const Users = ({ users: allUsers, ...rest }) => {
   const [selectedProf, setSelectedProf] = useState()
 
   useEffect(() => {
-    api.professions.fetchAll()
-      .then(data =>
-        setProfessions(data)
-      )
+    api.professions.fetchAll().then((data) => setProfessions(data))
   }, [])
 
   const renderPhrase = (number) => {
@@ -25,7 +27,7 @@ const Users = ({ users: allUsers, ...rest }) => {
       number > 1 && number < 5 ? "а тусанут" : number > 0 ? " тусанет" : ""
     return number === 0
       ? "Никто не тусанет"
-      : users.length + " человек" + phrase
+      : number + " человек" + phrase
   }
 
   const handleProfessionSelect = (item) => {
@@ -37,7 +39,7 @@ const Users = ({ users: allUsers, ...rest }) => {
   }
 
   const filteredUsers = selectedProf
-    ? allUsers.filter(user => user.profession === selectedProf)
+    ? allUsers.filter(user => JSON.stringify(user.profession) === JSON.stringify(selectedProf))
     : allUsers
 
   const count = filteredUsers.length
@@ -45,51 +47,55 @@ const Users = ({ users: allUsers, ...rest }) => {
 
   const clearFilter = () => {
     setSelectedProf()
+    setCurrentPage(1)
   }
 
   return (
-    <div className="container mt-3">
-      <SearchStatus users={users} renderPhrase={renderPhrase} />
-      {professions &&
-        <>
+    <div className="container m-3 d-flex">
+      {professions && (
+        <div className="d-flex flex-column flex-shrink-0 pe-3">
           <GroupList
             items={professions}
             selectedItem={selectedProf}
             onProfessionSelect={handleProfessionSelect}
           />
-          <button
-            className="btn btn-secondary mt-2"
-            onClick={clearFilter}
-          >Очистить</button>
-        </>
-      }
+          <button className="btn btn-secondary mt-2" onClick={clearFilter}>
+            Очистить
+          </button>
+        </div>
+      )}
 
       {count > 0 && (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Имя</th>
-              <th>Качества</th>
-              <th>Проффессия</th>
-              <th>Встретился, раз</th>
-              <th>Оценка</th>
-              <th>Избранное</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <User user={user} key={user._id} {...rest} />
-            ))}
-          </tbody>
-        </table>
+        <div className="d-flex flex-column">
+          <SearchStatus users={users} renderPhrase={renderPhrase} />
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Имя</th>
+                <th>Качества</th>
+                <th>Проффессия</th>
+                <th>Встретился, раз</th>
+                <th>Оценка</th>
+                <th>Избранное</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <User user={user} key={user._id} {...rest} />
+              ))}
+            </tbody>
+          </table>
+          <div className="d-flex justify-content-center">
+            <Pagination
+              itemsCount={count}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        </div>
       )}
-      <Pagination
-        itemsCount={count}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
     </div>
   )
 }
