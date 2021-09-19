@@ -13,7 +13,7 @@ import SearchStatus from "./searchStatus"
 import User from "./user"
 
 const Users = ({ users: allUsers, ...rest }) => {
-  const pageSize = 4
+  const pageSize = 2
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfessions] = useState()
   const [selectedProf, setSelectedProf] = useState()
@@ -32,6 +32,7 @@ const Users = ({ users: allUsers, ...rest }) => {
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item)
+    setCurrentPage(1)
   }
 
   const handlePageChange = (pageIndex) => {
@@ -67,7 +68,7 @@ const Users = ({ users: allUsers, ...rest }) => {
 
       {count > 0 && (
         <div className="d-flex flex-column">
-          <SearchStatus users={users} renderPhrase={renderPhrase} />
+          <SearchStatus length={count} renderPhrase={renderPhrase} />
           <table className="table">
             <thead>
               <tr>
