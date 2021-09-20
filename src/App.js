@@ -34,7 +34,7 @@ const App = () => {
       {users && (
         <Users
           users={users}
-          handleDelete={handleDelete}
+          onDelete={handleDelete}
           onToggleBookMark={handleToggleBookMark}
         />
       )}

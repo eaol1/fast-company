@@ -1,9 +1,11 @@
 import React from "react"
+
 import PropTypes from "prop-types"
+
 import Bookmark from "./bookmark"
 import Qualitie from "./qualitie"
 
-const User = ({ user, handleDelete, ...rest }) => {
+const User = ({ user, onDelete, ...rest }) => {
   return (
     <tr>
       <td>{user.name}</td>
@@ -21,7 +23,7 @@ const User = ({ user, handleDelete, ...rest }) => {
       <td>
         <button
           className="btn btn-danger"
-          onClick={() => handleDelete(user._id)}
+          onClick={() => onDelete(user._id)}
         >
           Delete
         </button>
@@ -32,7 +34,7 @@ const User = ({ user, handleDelete, ...rest }) => {
 
 User.propTypes = {
   user: PropTypes.object.isRequired,
-  handleDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired
 }
 
 export default User
