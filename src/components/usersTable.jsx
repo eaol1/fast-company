@@ -1,6 +1,7 @@
 import React from "react"
 
 import PropTypes from "prop-types"
+import { Link } from "react-router-dom"
 
 import Bookmark from "./bookmark"
 import QualitiesList from "./qualitiesList"
@@ -10,6 +11,7 @@ import TableHeader from "./tableHeader"
 const UserTable = ({ users, onSort, selectedSort, onDelete, ...rest }) => {
   const columns = {
     name: {
+      component: (user) => <Link to={`users/${user._id}`}>{user.name}</Link>,
       path: "name",
       name: "Имя"
     },
@@ -40,16 +42,16 @@ const UserTable = ({ users, onSort, selectedSort, onDelete, ...rest }) => {
     }
   }
 
-  return (
-    <table className="table">
-      <TableHeader {...{ onSort, selectedSort, columns }} />
-      <TableBody {...{ columns, data: users }} />
-      {/* <tbody>
-        {users.map((user) => (
-          <User user={user} key={user._id} {...rest} />
-        ))}
-        </tbody> */}
-    </table>
+  return (users
+    ? (
+      <table className="table">
+        <TableHeader {...{ onSort, selectedSort, columns }} />
+        <TableBody {...{ columns, data: users }} />
+      </table>
+    )
+    : (
+      <p>Loading...</p>
+    )
   )
 }
 

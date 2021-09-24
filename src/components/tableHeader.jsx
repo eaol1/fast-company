@@ -28,7 +28,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
           </th>
         ))}
       </tr>
-    </thead >
+    </thead>
   )
 }
 

@@ -3,14 +3,24 @@ import React, {
   useState
 } from "react"
 
+import {
+  Route,
+  Switch
+} from "react-router-dom"
+
 import api from "./api"
-import Users from "./components/users"
+import Navbar from "./components/navbar"
+import Login from "./layouts/login"
+import Main from "./layouts/main"
+import Users from "./layouts/users"
 
 const App = () => {
   const [users, setUsers] = useState()
+  const [professions, setProfessions] = useState()
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data))
+    api.professions.fetchAll().then((data) => setProfessions(data))
   }, [])
 
   const handleDelete = (userId) => {
@@ -31,13 +41,21 @@ const App = () => {
 
   return (
     <>
-      {users && (
-        <Users
-          users={users}
-          onDelete={handleDelete}
-          onToggleBookMark={handleToggleBookMark}
-        />
-      )}
+      <div className="container">
+        <Navbar />
+        <Switch>
+          <Route path="/" exact component={Main} />
+          <Route path="/login" component={Login} />
+          <Route path="/users/:userId?" render={() => (users && professions && (
+            <Users
+              users={users}
+              professions={professions}
+              onDelete={handleDelete}
+              onToggleBookMark={handleToggleBookMark}
+            />
+          ))}/>
+        </Switch>
+      </div>
     </>
   )
 }
