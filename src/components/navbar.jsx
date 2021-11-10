@@ -1,7 +1,7 @@
 import React from "react"
 
 import {
-  Link,
+  NavLink,
   useLocation
 } from "react-router-dom"
 
@@ -9,21 +9,21 @@ const Navbar = () => {
   const location = useLocation()
   console.log("location", location)
   return (
-    <ul className="nav">
+    <ul className="nav nav-pills">
       <li className="nav-item">
-        <Link className={`nav-link${location.pathname === "/" ? " active" : ""}`} aria-current="page" to="/">
+        <NavLink exact className="nav-link" aria-current="page" to="/">
           Main
-        </Link>
+        </NavLink>
       </li>
       <li className="nav-item">
-        <Link className={`nav-link${location.pathname === "/login" ? " active" : ""}`} to="/login">
+        <NavLink className="nav-link" to="/login">
           Login
-        </Link>
+        </NavLink>
       </li>
       <li className="nav-item">
-        <Link className={`nav-link${location.pathname === "/users/:userId?" ? " active" : ""}`} to="/users">
+        <NavLink className="nav-link" to="/users">
           Users
-        </Link>
+        </NavLink>
       </li>
     </ul>
   )

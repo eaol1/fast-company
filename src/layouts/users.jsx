@@ -12,6 +12,7 @@ import SearchStatus from "../components/searchStatus"
 import User from "../components/user"
 import UserTable from "../components/usersTable"
 import { paginate } from "../utils/paginate"
+import TextField from "../components/textField"
 
 const Users = ({ users: allUsers, professions, ...rest }) => {
   const params = useParams()
@@ -21,6 +22,7 @@ const Users = ({ users: allUsers, professions, ...rest }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedProf, setSelectedProf] = useState()
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" })
+  const [serchValue, setSerchValue] = useState("")
 
   const renderPhrase = (number) => {
     const phrase =
@@ -49,11 +51,20 @@ const Users = ({ users: allUsers, professions, ...rest }) => {
 
   const count = filteredUsers.length
   const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order])
-  const users = paginate(sortedUsers, currentPage, pageSize)
+  let users = paginate(sortedUsers, currentPage, pageSize)
+
+  users = filteredUsers.filter(user => {
+    return user.name.toLowerCase().includes(serchValue.toLowerCase())
+  })
 
   const clearFilter = () => {
     setSelectedProf()
     setCurrentPage(1)
+  }
+
+  const handleSearch = ({ target }) => {
+    setSerchValue(target.value)
+    console.log(serchValue)
   }
 
   return (
@@ -65,7 +76,7 @@ const Users = ({ users: allUsers, professions, ...rest }) => {
           </div>
         )
         : (
-          <div className="m-3 d-flex">
+          <div className="container m-3 d-flex">
             {professions && (
               <div className="d-flex flex-column flex-shrink-0 pe-3">
                 <GroupList
@@ -82,12 +93,21 @@ const Users = ({ users: allUsers, professions, ...rest }) => {
             {count > 0 && (
               <div className="d-flex flex-column">
                 <SearchStatus length={count} renderPhrase={renderPhrase} />
-                <UserTable
-                  users={users}
-                  onSort={handleSort}
-                  selectedSort={sortBy}
-                  {...rest}
+                <TextField
+                  label=""
+                  placeholder="Поиск"
+                  name="search"
+                  onChange={handleSearch}
                 />
+                {users.length > 0
+                  ? (<UserTable
+                    users={users}
+                    onSort={handleSort}
+                    selectedSort={sortBy}
+                    {...rest}
+                  />)
+                  : (<p>Никто не найден</p>)
+                }
                 <div className="d-flex justify-content-center">
                   <Pagination
                     itemsCount={count}
