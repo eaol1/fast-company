@@ -3,12 +3,11 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 
-import Bookmark from "./bookmark"
-import QualitiesList from "./qualitiesList"
-import TableBody from "./tableBody"
-import TableHeader from "./tableHeader"
+import Bookmark from "../common/bookmark"
+import Qualities from "./qualities"
+import Table from "../common/table"
 
-const UserTable = ({ users, onSort, selectedSort, onDelete, ...rest }) => {
+const UserTable = ({ users: data, onSort, selectedSort, onDelete, ...rest }) => {
   const columns = {
     name: {
       component: (user) => <Link to={`users/${user._id}`}>{user.name}</Link>,
@@ -17,7 +16,7 @@ const UserTable = ({ users, onSort, selectedSort, onDelete, ...rest }) => {
     },
     qualities: {
       name: "Качества",
-      component: (user) => <QualitiesList qualities={user.qualities} />
+      component: (user) => <Qualities qualities={user.qualities} />
     },
     professions: {
       path: "profession.name",
@@ -42,12 +41,9 @@ const UserTable = ({ users, onSort, selectedSort, onDelete, ...rest }) => {
     }
   }
 
-  return (users
+  return (data
     ? (
-      <table className="table">
-        <TableHeader {...{ onSort, selectedSort, columns }} />
-        <TableBody {...{ columns, data: users }} />
-      </table>
+      <Table {...{ onSort, selectedSort, columns, data }} />
     )
     : (
       <p>Loading...</p>

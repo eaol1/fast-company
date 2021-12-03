@@ -4,8 +4,12 @@ import PropTypes from "prop-types"
 function TextField({ label, placeholder, type, name, value, onChange, error }) {
   const [showPassword, setShowPassword] = useState(false)
 
+  const handleChange = ({ target }) => {
+    onChange({ name: target.name, value: target.value })
+  }
+
   const getInputClasses = () => {
-    return `form-control ${error ? "is-invalid" : ""}`
+    return `form-control${error ? " is-invalid" : ""}`
   }
   const toggleShowPassword = () => {
     setShowPassword(prevState => !prevState)
@@ -22,15 +26,15 @@ function TextField({ label, placeholder, type, name, value, onChange, error }) {
           id={name}
           name={name}
           value={value}
-          onChange={onChange}
+          onChange={handleChange}
           placeholder={placeholder ? `${placeholder}` : ""}
           className={getInputClasses()}
         />
         {type === "password" &&
           <button className="btn btn-outline-secondary" type="button" onClick={toggleShowPassword}><i className={"bi bi-eye" + (showPassword ? "-slash" : "")}></i></button>
         }
+        {error && <div className="invalid-feedback">{error}</div>}
       </div>
-      {error && <div className="invalid-feedback">{error}</div>}
     </div>
   )
 }
