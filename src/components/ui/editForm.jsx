@@ -75,7 +75,12 @@ const EditForm = () => {
   }, [data])
 
   useEffect(() => {
-    api.users.getById(userId).then(data => setData(data))
+    api.users.getById(userId).then(data => setData({
+      ...data,
+      profession: data.profession._id,
+      qualities: data.qualities.map(quality => ({ label: quality.name, value: quality._id })),
+      passowrd: data.password ? data.password : ""
+    }))
     api.professions.fetchAll().then(data => setProfession(data))
     api.qualities.fetchAll().then(data => setQualities(data))
   }, [])
@@ -119,7 +124,7 @@ const EditForm = () => {
         label="Выберите вашу профессию"
         name="profession"
         defaultOption="Выберите..."
-        value={data.option}
+        value={data.profession}
         onChange={handleChange}
         options={professions}
         error={errors.profession}
@@ -136,6 +141,7 @@ const EditForm = () => {
       />
       <MultiSelectField
         options={qualities}
+        selectOption={data.qualities}
         onChange={handleChange}
         name="qualities"
         error={errors.qualities}

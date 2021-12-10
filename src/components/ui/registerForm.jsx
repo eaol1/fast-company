@@ -128,6 +128,7 @@ const RegisterForm = () => {
       />
       <MultiSelectField
         options={qualities}
+        setValue={data.qualities}
         onChange={handleChange}
         name="qualities"
         error={errors.qualities}
