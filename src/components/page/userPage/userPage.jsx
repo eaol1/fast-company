@@ -4,7 +4,7 @@ import React, {
 } from "react"
 
 import PropTypes from "prop-types"
-import { useHistory } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import api from "../../../api"
 import Qualities from "../../ui/qualities"
 const UserPage = ({ userId }) => {
@@ -31,12 +31,12 @@ const UserPage = ({ userId }) => {
         <div>Встретился, раз: {user.completedMeetings}</div>
         <div>Оценка: {user.rate}/5</div>
         <div className="mt-4">
-          <button
+          <Link to={`/users/${user._id}/edit`}
             className="btn btn-secondary btn-sm"
             onClick={() => { handleBackward() }}
           >
-            Все пользователи
-          </button>
+            Редактировать
+          </Link>
         </div>
       </>)
     : (

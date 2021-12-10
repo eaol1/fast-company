@@ -9,19 +9,26 @@ const GroupList = ({
   contentProperty,
   onProfessionSelect
 }) => {
-  const count = items.length
+  const professionsArray = !Array.isArray(items) && typeof (items) === "object"
+    ? Object.keys(items).map(itemName => ({
+      name: items[itemName].name,
+      _id: items[itemName]._id
+    }))
+    : items
 
+  const count = professionsArray.length
+  professionsArray.map(item => console.log(item))
   return (
     <ul className="list-group">
       {count > 0 &&
-        items.map(item => (
+        professionsArray.map(item => (
           <li
-            key={item[valueProperty]}
+            key={item._id}
             className={`list-group-item${item === selectedItem ? " active" : ""}`}
             onClick={() => onProfessionSelect(item)}
             role="button"
           >
-            {item[contentProperty]}
+            {item.name}
           </li>
         ))}
     </ul>
