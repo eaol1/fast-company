@@ -4,7 +4,7 @@ import React, {
 } from "react"
 
 import PropTypes from "prop-types"
-import { Link, useHistory } from "react-router-dom"
+import { Link } from "react-router-dom"
 import api from "../../../api"
 import Qualities from "../../ui/qualities"
 const UserPage = ({ userId }) => {
@@ -13,12 +13,6 @@ const UserPage = ({ userId }) => {
   useEffect(() => {
     api.users.getById(userId).then((data) => setUser(data))
   }, [])
-
-  const history = useHistory()
-
-  const handleBackward = () => {
-    history.push("/users")
-  }
 
   return <>{user
     ? (
@@ -33,7 +27,6 @@ const UserPage = ({ userId }) => {
         <div className="mt-4">
           <Link to={`/users/${user._id}/edit`}
             className="btn btn-secondary btn-sm"
-            onClick={() => { handleBackward() }}
           >
             Редактировать
           </Link>
