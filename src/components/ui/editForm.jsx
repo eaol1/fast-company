@@ -22,7 +22,7 @@ const EditForm = () => {
     licence: false
   })
 
-  const [data, setData] = useState({})
+  // const [data, setData] = useState({})
   const [qualities, setQualities] = useState({})
   const [professions, setProfession] = useState([])
   const [errors, setErrors] = useState({})
@@ -108,34 +108,32 @@ const EditForm = () => {
     return Object.keys(errors).length === 0 || false
   }
 
+  const handleChangeProfession = (professionId) => {
+    return professions.filter(prof => prof._id === professionId)[0]
+  }
+
+  const handleChangeQualities = () => {
+    return user.undefined.map(quality => ({
+      color: quality.color,
+      name: quality.label,
+      _id: quality.value
+    }))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-    if (user) {
-      let index = 0
-      professions.map((prof, i) => {
-        if (prof._id === e.target.profession.value) {
-          index = i
-        }
-        return index
-      })
-      setData(user)
-      setData(prevStat => ({
-        ...prevStat,
-        profession: professions[index],
-        qualities: prevStat.undefined.map(quality => ({
-          color: quality.color,
-          name: quality.label,
-          _id: quality.value
-        }))
-      }))
-    }
 
-    api.users.update(data._id, data).then((data) => {
-      // setUser(data)
-      handleBackward()
-    })
+    if (user) {
+      const data = {
+        ...user,
+        profession: handleChangeProfession(e.target.profession.value),
+        qualities: handleChangeQualities()
+      }
+
+      api.users.update(data._id, data).then(() => handleBackward())
+    }
   }
 
   const history = useHistory()
@@ -145,8 +143,6 @@ const EditForm = () => {
   }
 
   if (user) {
-    console.log("Data", data)
-
     return (
       <div className="container mt-5">
         <div className="row">

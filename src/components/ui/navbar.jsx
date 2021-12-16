@@ -9,7 +9,7 @@ const Navbar = () => {
   const location = useLocation()
   console.log("location", location)
   return (
-    <ul className="nav nav-pills">
+    <ul className="nav nav-pills mb-4">
       <li className="nav-item">
         <NavLink exact className="nav-link" aria-current="page" to="/">
           Main

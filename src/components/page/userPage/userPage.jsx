@@ -14,6 +14,18 @@ const UserPage = ({ userId }) => {
     api.users.getById(userId).then((data) => setUser(data))
   }, [])
 
+  const getSex = () => {
+    const array = [
+      { name: "Male", value: "male" },
+      { name: "Female", value: "female" },
+      { name: "Other", value: "other" }
+    ]
+    let sex = {}
+    sex = array.filter(s => s.value === user.sex)[0]
+
+    return sex.name
+  }
+
   return <>{user
     ? (
       <>
@@ -22,6 +34,7 @@ const UserPage = ({ userId }) => {
           <Qualities qualities={user.qualities} />
         </div>
         <div>Профессия: {user.profession.name}</div>
+        <div>Пол: {getSex()}</div>
         <div>Встретился, раз: {user.completedMeetings}</div>
         <div>Оценка: {user.rate}/5</div>
         <div className="mt-4">
