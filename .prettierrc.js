@@ -3,5 +3,5 @@ module.exports = {
   singleQuote: false,
   jsxSingleQuote: false,
   tabWidth: 2,
-  semi: false
+  semi: true
 }

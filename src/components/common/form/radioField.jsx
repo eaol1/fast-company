@@ -8,7 +8,7 @@ const RadioField = ({ options, name, onChange, value, label }) => {
   return (
     <div className="mb-4">
       {label &&
-      <label>{label}</label>
+      <div><label>{label}</label></div>
       }
       {options.map(option => (
         <div
@@ -20,7 +20,7 @@ const RadioField = ({ options, name, onChange, value, label }) => {
             type="radio"
             name={name}
             id={option.name + "_" + option.value}
-            chacked={`${option.value === value}`}
+            checked={option.value === value}
             value={option.value}
             onChange={handleChange}
           />

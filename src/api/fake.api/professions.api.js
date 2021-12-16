@@ -21,6 +21,14 @@ const fetchAll = () =>
     }, 2000)
   })
 
+const fetchAllObject = () =>
+  new Promise((resolve) => {
+    window.setTimeout(function () {
+      resolve(professions)
+    }, 2000)
+  })
+
 export default {
-  fetchAll
+  fetchAll,
+  fetchAllObject
 }
