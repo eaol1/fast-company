@@ -147,79 +147,82 @@ const EditForm = () => {
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-6 offset-md-3 shadow p-4">
-            <h2>Редактирование пользователя</h2>
-            {!loading && (
-              <form onSubmit={handleSubmit}>
-                <TextField
-                  label="Имя"
-                  name="name"
-                  value={user.name}
-                  onChange={handleChange}
-                  error={errors.name}
-                />
-                <TextField
-                  label="Электронная почта"
-                  name="email"
-                  value={user.email}
-                  onChange={handleChange}
-                  error={errors.email}
-                />
-                <TextField
-                  label="Пароль"
-                  type="password"
-                  name="password"
-                  value={user.password}
-                  onChange={handleChange}
-                  error={errors.password}
-                />
-                <SelectField
-                  label="Выберите вашу профессию"
-                  name="profession"
-                  defaultOption="Выберите..."
-                  value={user.profession}
-                  onChange={handleChange}
-                  options={professions}
-                  error={errors.profession}
-                />
-                <RadioField
-                  name="sex"
-                  value={user.sex}
-                  onChange={handleChange}
-                  options={[
-                    { name: "Male", value: "male" },
-                    { name: "Female", value: "female" },
-                    { name: "Other", value: "other" }
-                  ]}
-                  label="Выберите ваш пол"
-                />
-                <MultiSelectField
-                  options={qualities}
-                  qualitiesValue={user.qualities}
-                  onChange={handleChange}
-                  name="qualities"
-                  error={errors.qualities}
-                />
-                <CheckBoxField
-                  value={user.licence}
-                  onChange={handleChange}
-                  name="licence"
-                  error={errors.licence}
-                >
-                  Подтвердить <a>лицензионное соглашение</a>
-                </CheckBoxField>
-                <div className="d-flex justify-content-between">
-                  <button
-                    className="btn btn-secondary btn-sm me-3"
-                    onClick={() => { handleBackward() }}
+            {!loading
+              ? (<>
+                <h2>Редактирование пользователя</h2>
+                <form onSubmit={handleSubmit}>
+                  <TextField
+                    label="Имя"
+                    name="name"
+                    value={user.name}
+                    onChange={handleChange}
+                    error={errors.name}
+                  />
+                  <TextField
+                    label="Электронная почта"
+                    name="email"
+                    value={user.email}
+                    onChange={handleChange}
+                    error={errors.email}
+                  />
+                  <TextField
+                    label="Пароль"
+                    type="password"
+                    name="password"
+                    value={user.password}
+                    onChange={handleChange}
+                    error={errors.password}
+                  />
+                  <SelectField
+                    label="Выберите вашу профессию"
+                    name="profession"
+                    defaultOption="Выберите..."
+                    value={user.profession}
+                    onChange={handleChange}
+                    options={professions}
+                    error={errors.profession}
+                  />
+                  <RadioField
+                    name="sex"
+                    value={user.sex}
+                    onChange={handleChange}
+                    options={[
+                      { name: "Male", value: "male" },
+                      { name: "Female", value: "female" },
+                      { name: "Other", value: "other" }
+                    ]}
+                    label="Выберите ваш пол"
+                  />
+                  <MultiSelectField
+                    options={qualities}
+                    qualitiesValue={user.qualities}
+                    onChange={handleChange}
+                    name="qualities"
+                    error={errors.qualities}
+                  />
+                  <CheckBoxField
+                    value={user.licence}
+                    onChange={handleChange}
+                    name="licence"
+                    error={errors.licence}
                   >
+                  Подтвердить <a>лицензионное соглашение</a>
+                  </CheckBoxField>
+                  <div className="d-flex justify-content-between">
+                    <button
+                      className="btn btn-secondary btn-sm me-3"
+                      onClick={() => { handleBackward() }}
+                    >
                     Назад
-                  </button>
-                  <button className="btn btn-primary w-100 mx-auto">
+                    </button>
+                    <button className="btn btn-primary w-100 mx-auto">
                       Сохранить
-                  </button>
-                </div>
-              </form>
-            )}
+                    </button>
+                  </div>
+                </form>
+              </>)
+              : (<p>loading...</p>)
+            }
           </div>
         </div>
       </div>
