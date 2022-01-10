@@ -10,7 +10,7 @@ import Table from "../common/table"
 const UserTable = ({ users: data, onSort, selectedSort, onDelete, ...rest }) => {
   const columns = {
     name: {
-      component: (user) => <Link to={`users/${user._id}`}>{user.name}</Link>,
+      component: (user) => <Link to={`/users/${user._id}`}>{user.name}</Link>,
       path: "name",
       name: "Имя"
     },
