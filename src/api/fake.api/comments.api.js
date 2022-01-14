@@ -64,7 +64,7 @@ const remove = (id) =>
       console.log(id)
       console.log(newComments)
       localStorage.setItem("comments", JSON.stringify(newComments))
-      resolve(id)
+      resolve(newComments)
     }, 200)
   })
 export default {
