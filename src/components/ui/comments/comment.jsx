@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import API from "../../../api";
+import { displayDate } from "../../../utils/displayDate";
 
 const Comment = ({ comment, onDelete }) => {
     const [user, setUser] = useState();
@@ -36,9 +37,9 @@ const Comment = ({ comment, onDelete }) => {
                                     <div className="mb-4">
                                         <div className="d-flex justify-content-between align-items-center">
                                             <p className="mb-1">
-                                                {user.name}
+                                                {user.name}&nbsp;
                                                 <span className="small">
-                                                    {comment.created_at}
+                                                    {displayDate(comment.created_at)}
                                                 </span>
                                             </p>
                                             <button onClick={() => onDelete(comment._id)} className="btn btn-sm text-primary d-flex align-items-center">

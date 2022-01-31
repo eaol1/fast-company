@@ -21,7 +21,6 @@ const UserPage = ({ userId }) => {
             .fetchCommentsForUser(userId)
             .then((data) => setComments(data));
     }, []);
-    console.log(users);
 
     const handleDelete = (id) => {
         api.comments.remove(id).then((data1) => {
